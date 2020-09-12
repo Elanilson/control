@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Controle do peso</string>
+    <string name="progresso">Progressso</string>
+    <string name="meta">Meta</string>
+    <string name="historico">Historico</string>
+    <string name="premium">Premium</string>
+    <string name="compartilhar">Compartilhar</string>
+    <string name="perfil">Perfil</string>
+    <string name="mudanca">Mudança</string>
+    <string name="dias_restantes">Dias restantes</string>
+    <string name="peso_inicial">Peso inicial</string>
+    <string name="peso_atual">Peso atual</string>
+    <string name="data">Data</string>
+    <string name="salvar">Salvar</string>
+    <string name="recordes">Recordes</string>
+    <string name="maiorpeso">Maior Peso (kg)</string>
+    <string name="maiorimc">Maior IMC</string>
+    <string name="gordurapcento">Gordura (%)</string>
+    <string name="gordurakg">Gordura(Kg)</string>
+    <string name="peso">Peso</string>
+    <string name="prosseguir">Prosseguir</string>
+    <string name="masculino">Masculino</string>
+    <string name="feminino">Femenino</string>
+    <string name="salvo">Salvo com sucesso</string>
+    <string name="filtro">Filtro</string>
+    <string name="vizualizar">Selecione um período:</string>
+
+
+</resources>

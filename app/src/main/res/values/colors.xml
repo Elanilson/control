@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#242043</color>
+    <color name="colorPrimaryDark">#242043</color>
+    <color name="colorAccent">#433B7A</color>
+    <color name="branco">#FFFFFF</color>
+    <color name="fundo">#242043</color>
+    <color name="azulClaro">#3E504987</color>
+    <color name="cinza">#DDDDDD</color>
+    <color name="cinzaClaro">#5EE0E0E1</color>
+    <color name="laranja">#e58f3c</color>
+    <color name="verder">#105A14</color>
+    <color name="positivo">#105A14</color>
+    <color name="negativo">#F64E52</color>
+</resources>
