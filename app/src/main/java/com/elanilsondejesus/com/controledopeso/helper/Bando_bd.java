@@ -25,7 +25,8 @@ public class Bando_bd extends SQLiteOpenHelper {
         String sql = " CREATE TABLE IF NOT EXISTS "+TABELA_DADOS
                 +"(id INTEGER PRIMARY KEY AUTOINCREMENT,  nome varchar(15)," +
                 "pesoInicial double,meta float,dataMeta varchar(10)," +
-                "dataNascimento int,altura float,sexo varchar(9),pesoatual float,mudanca double,maiorpeso float,imc float,maiorimc float);";
+                "dataNascimento int,altura float,sexo varchar(9),pesoatual float,mudanca double,maiorpeso float,pesoinicialmeta float,imc float,maiorimc float);";
+        //pesorestante é o resultado da subtracao do peso autal com a meta
 
 
         String sql2 = "CREATE TABLE IF NOT EXISTS "+TABELA_PROGRESSO+"(id INTEGER PRIMARY KEY AUTOINCREMENT, dia int, mes int,ano int, peso float);";

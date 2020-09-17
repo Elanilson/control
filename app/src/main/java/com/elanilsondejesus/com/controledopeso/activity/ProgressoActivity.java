@@ -93,7 +93,6 @@ public class ProgressoActivity extends AppCompatActivity  implements DatePickerD
 
         iniciarComponentes();
         carregar();
-        iniciarAtribuicao();
         carregarProgress();
 
         calcularImc();
@@ -108,6 +107,9 @@ public class ProgressoActivity extends AppCompatActivity  implements DatePickerD
         graficoProgressoMes();
         graficoProgresCirculosoMes();
         progresso();
+
+
+        iniciarAtribuicao();
 
 
         FloatingActionButton floatAdiconarPEso = findViewById(R.id.adicionarPeso);
@@ -125,6 +127,7 @@ public class ProgressoActivity extends AppCompatActivity  implements DatePickerD
                 selecionarMes();
             }
         });
+
 
     }
         public void recuperarPreferences(){
@@ -213,7 +216,7 @@ public class ProgressoActivity extends AppCompatActivity  implements DatePickerD
     ///=================================================== circular
 
 
-            PieDataSet pieDataSet = new PieDataSet(visito,"Meses");
+            PieDataSet pieDataSet = new PieDataSet(visito,"Index");
             pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
             pieDataSet.setValueTextColor(Color.BLACK);
             pieDataSet.setValueTextSize(16f);
@@ -221,7 +224,7 @@ public class ProgressoActivity extends AppCompatActivity  implements DatePickerD
 
             pieChart.setData(pieData);
             pieChart.getDescription().setEnabled(false);
-            pieChart.setCenterText("Seletores");
+            pieChart.setCenterText("Mês");
             pieChart.animate();
         }
         public void maiorPeso(float novo){
@@ -232,7 +235,15 @@ public class ProgressoActivity extends AppCompatActivity  implements DatePickerD
             DecimalFormat df = new DecimalFormat("#.##");
             String novoPesoFormatado = df.format(novo);
             novo = Float.parseFloat(novoPesoFormatado);
-            if ( novo > pesoAtual && pesoAtual == 0.0) {
+
+//            if(novo != 0 && novo >= usuario.getPesoMaior()){
+//                usuario.setPesoMaior(novo);
+//                if (dao.atualizar(usuario)) {
+//                    Toast.makeText(this, "Maior peso adicionado", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+
+            if ( novo >= pesoAtual && pesoAtual == 0 && novo != 0) {
                     usuario.setPesoMaior(novo);
                     if (dao.salvar(usuario)) {
                      //   Toast.makeText(this, "____Novo peso salvo", Toast.LENGTH_SHORT).show();
@@ -240,7 +251,7 @@ public class ProgressoActivity extends AppCompatActivity  implements DatePickerD
                       //  Toast.makeText(this, "falhaa Novo peso", Toast.LENGTH_SHORT).show();
 
                     }
-                } else if (pesoAtual != 0.0 && novo > pesoAtual) {
+                } else if (novo !=0 && novo >= pesoAtual) {
                     usuario.setPesoMaior(novo);
                     if (dao.atualizar(usuario)) {
                      //   Toast.makeText(this, "-____Novo peso atualizadooo", Toast.LENGTH_SHORT).show();
@@ -252,6 +263,7 @@ public class ProgressoActivity extends AppCompatActivity  implements DatePickerD
 
             maiorPeso.setText(""+usuario.getPesoMaior()+" Kg");
         }
+
         public void graficoProgressoMes(){
             ProgressoDao dao = new DaoProgress(getApplicationContext(),8);
 
@@ -329,7 +341,7 @@ public class ProgressoActivity extends AppCompatActivity  implements DatePickerD
             float pesoexistente = usuario.getPesoAtual();
             String mudanca ="";
             if(pesoexistente == 0.0){
-                pesoexistente = usuario.getPesoInicial();
+                pesoexistente = usuario.getPesoinicialmeta();
 
             }
             double resultado = novoPeso - pesoexistente;
@@ -359,12 +371,12 @@ public class ProgressoActivity extends AppCompatActivity  implements DatePickerD
             }else{
                 //  Toast.makeText(ProgressoActivity.this, "Falha ao salvar historico", Toast.LENGTH_SHORT).show();
             }
-            if(dao.atualizar(usuario)){ // atualiza o novo peso no tabela princial
-                //  Toast.makeText(ProgressoActivity.this, "Novo peso atualizado", Toast.LENGTH_SHORT).show();
-
-            }else{
-                //  Toast.makeText(ProgressoActivity.this, "Falhaa", Toast.LENGTH_SHORT).show();
-            }
+//            if(dao.atualizar(usuario)){ // atualiza o novo peso no tabela princial
+//                //  Toast.makeText(ProgressoActivity.this, "Novo peso atualizado", Toast.LENGTH_SHORT).show();
+//
+//            }else{
+//                //  Toast.makeText(ProgressoActivity.this, "Falhaa", Toast.LENGTH_SHORT).show();
+//            }
         }
         public Boolean progresso(){
 
@@ -501,6 +513,8 @@ public class ProgressoActivity extends AppCompatActivity  implements DatePickerD
                 usuario.setSexo(user.getSexo());
                 usuario.setMudanca(user.getMudanca());
                 usuario.setPesoMaior(user.getPesoMaior());
+                usuario.setPesoinicialmeta(user.getPesoinicialmeta());
+
               //  usuario.setDatamudanca(user.getDatamudanca());
 
             }
@@ -540,7 +554,6 @@ public class ProgressoActivity extends AppCompatActivity  implements DatePickerD
         protected void onStart() {
             super.onStart();
             carregar();
-            iniciarAtribuicao();
             calcularImc();
             calcularPorcentagemdeGordura();
             recuperarPreferences();
@@ -548,6 +561,9 @@ public class ProgressoActivity extends AppCompatActivity  implements DatePickerD
             graficoProgressoMes();
             graficoProgresCirculosoMes();
 
+
+
+            iniciarAtribuicao();
 
         }
 

@@ -136,6 +136,7 @@ public class MetaActivity extends AppCompatActivity implements DatePickerDialog.
             usuario.setNome(user.getNome());
             usuario.setNascimento(user.getNascimento());
             usuario.setPesoInicial(user.getPesoInicial());
+            usuario.setPesoMaior(user.getPesoMaior());
             usuario.setAltura(user.getAltura());
             usuario.setMeta(user.getMeta());
             usuario.setData(user.getData());
@@ -146,33 +147,35 @@ public class MetaActivity extends AppCompatActivity implements DatePickerDialog.
             usuario.setSexo(user.getSexo());
             usuario.setMudanca(user.getMudanca());
             usuario.setPesoAtual(user.getPesoAtual());
+            usuario.setPesoRestante(user.getPesoRestante());
+            usuario.setPesoinicialmeta(user.getPesoinicialmeta());
 
         }
         meta.setText(""+usuario.getMeta());
-        pesoaltual.setText(""+usuario.getPesoAtual());
+        pesoaltual.setText(""+usuario.getPesoinicialmeta());
         datameta.setText(""+usuario.getData());
 
 
     }
+
     public void salvar ( View view){
         DaoControle dao = new DaoControle(this);
         float meta = Float.parseFloat(this.meta.getText().toString());
     float peso = Float.parseFloat(pesoaltual.getText().toString());
 
-//        String data = +ano+"-"+(mes+1)+"-"+dia;/// data seleciona  que é a meta data
-//        Usuario usuario1 = new Usuario();
-//
-//
-
-
         if (usuario.getMeta() == 0.0 || usuario.getData().isEmpty() || usuario.getData() == null || usuario.getData().equals("")) {
           preferencias.salvarMeta(meta);
             usuario.setMeta(meta);
-            usuario.setPesoAtual(peso);
+            usuario.setPesoinicialmeta(peso);
+            float resto = meta-peso;
+            usuario.setPesoRestante(resto);
+           // usuario.setPesoMaior(usuario.getPesoMaior());
 
             //  usuario.setData(data);
 
             if (dao.atualizar(usuario)) {
+                preferencias.salvarAlertaMeta(true);
+
                 Toast.makeText(this, "Sucesso", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Falha", Toast.LENGTH_SHORT).show();
@@ -181,10 +184,15 @@ public class MetaActivity extends AppCompatActivity implements DatePickerDialog.
         } else {
 
             // usuario.setData(data);
-            usuario.setPesoAtual(peso);
+            usuario.setPesoinicialmeta(peso);
             usuario.setMeta(meta);
+            float resto = meta-peso;
+            usuario.setPesoRestante(resto);
             if (dao.atualizar(usuario)) {
+                preferencias.salvarAlertaMeta(true);
+
                 Toast.makeText(this, "Atualizado", Toast.LENGTH_SHORT).show();
+
             } else {
 
                 Toast.makeText(this, "flha Atualiza", Toast.LENGTH_SHORT).show();

@@ -30,7 +30,10 @@ private SQLiteDatabase ler;
         cv.put("pesoatual",usuario.getPesoAtual());
         cv.put("mudanca",usuario.getMudanca());
         cv.put("maiorpeso",usuario.getPesoMaior());
-     //   cv.put("datamudanca",usuario.getDatamudanca());
+        cv.put("pesoinicialmeta",usuario.getPesoinicialmeta());
+
+//        cv.put("pesoRestante",usuario.getPesoRestante());
+
 
         cv.put("meta",usuario.getMeta());
         cv.put("dataMeta",usuario.getData());
@@ -66,6 +69,10 @@ private SQLiteDatabase ler;
         cv.put("maiorpeso",usuario.getPesoMaior());
         cv.put("imc",usuario.getImc());
         cv.put("maiorimc",usuario.getImcMaior());
+        cv.put("pesoinicialmeta",usuario.getPesoinicialmeta());
+
+
+//        cv.put("pesoRestante",usuario.getPesoRestante());
 
 
 
@@ -114,6 +121,8 @@ private SQLiteDatabase ler;
         float meta = c.getFloat(c.getColumnIndex("meta"));
         double mudanca = c.getDouble(c.getColumnIndex("mudanca"));
         float maiorpeso = c.getFloat(c.getColumnIndex("maiorpeso"));
+        float pesoinicialmeta = c.getFloat(c.getColumnIndex("pesoinicialmeta"));
+//        float pesorestante = c.getFloat(c.getColumnIndex("pesoRestante"));
         String nome = c.getString(c.getColumnIndex("nome"));
        // String datamudanca = c.getString(c.getColumnIndex("datamudanca"));
         String sexo = c.getString(c.getColumnIndex("sexo"));
@@ -122,6 +131,7 @@ private SQLiteDatabase ler;
         float altura = c.getFloat(c.getColumnIndex("altura"));
         float imc = c.getFloat(c.getColumnIndex("imc"));
         float maiorimc = c.getFloat(c.getColumnIndex("maiorimc"));
+
 
 
         dadosDoUsuario.setId(id);
@@ -137,6 +147,9 @@ private SQLiteDatabase ler;
         dadosDoUsuario.setPesoMaior(maiorpeso);
         dadosDoUsuario.setImc(imc);
         dadosDoUsuario.setImcMaior(maiorimc);
+        dadosDoUsuario.setPesoinicialmeta(pesoinicialmeta);
+
+//        dadosDoUsuario.setPesoRestante(pesorestante);
       //  dadosDoUsuario.setDatamudanca(datamudanca);
 
         dados.add(dadosDoUsuario);

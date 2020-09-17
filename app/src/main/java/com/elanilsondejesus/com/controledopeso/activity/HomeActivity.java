@@ -7,9 +7,11 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,8 +33,8 @@ import java.util.Date;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
-//    private ProgressBar progressBarFundo, progressBarDias, progressBarMeta;
 
+    private ProgressBar progressobar;
     private List<Usuario> dados = new ArrayList<>();
     private Usuario usuario = new Usuario();
     private String verificar="" ;// verificar se o usuario já forneceu as informações antes
@@ -45,23 +47,75 @@ public class HomeActivity extends AppCompatActivity {
     private  int diatu ;// dia atual sem formatacao para colocar no progressobar
     private HistoricoItem item  = new HistoricoItem();
     private AlertDialog alerta;
-    String mudanca="";
+    private Dialog dialox;
+    private Button adicionarNovaMeta;
+    private ImageButton closeMeta;
+    private Preferencias preferencias;
+    private Boolean alertaMetaBatida =false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        preferencias = new Preferencias(getApplicationContext());
+
         inicializarComponentes();
-        diasRestantes();
         kgRestante();
         carregar();
         progressoDias();
         atriobuicao();
+        diasRestantes();
+        diasRestantes();
+
+
+
         Toast.makeText(this, "peso: "+usuario.getPesoAtual(), Toast.LENGTH_SHORT).show();
+        dialox = new Dialog(this);
+    }
+//    public void setProgressobar(){
+//        // para perde peso
+//        DaoHistorico hist = new DaoHistorico(getApplicationContext());
+//        DaoControle dao = new DaoControle(getApplicationContext());
+//
+//        int max =0;
+//        int progress = 0;
+//
+//            String mudanca="";
+//        if(usuario.getPesoRestante() != 0){
+//           float x = usuario.getPesoRestante();
+//          max  = Math.round(x);
+//          progressobar.setMax(max);
+//
+//
+//            for(HistoricoItem item: hist.listar()){
+//                mudanca = item.getMudanca().replace("+","");
+//            float mudancaConvertida = Float.parseFloat(mudanca);
+//            progress = Math.round(mudancaConvertida);
+//            progress += progress;
+//            progressobar.setProgress(progress);
+//            }
+//        }
+//
+//
+//
+//
+//
+//    }
+public void recuperarPreferences(){
+    //recuperando dados
+    Boolean alerta = preferencias.recuperarALERTAMeta();
+
+
+    //verificar se ta nulo ou nao
+    if(alerta){
+        //se nao tive nulo entra aqui
+        alertaMetaBatida = alerta;
+        Toast.makeText(this, "Alerta Ativo: "+alertaMetaBatida, Toast.LENGTH_SHORT).show();
 
     }
 
+}
         public void diasRestantes(){
 
             Date data = new Date();
@@ -98,15 +152,12 @@ public class HomeActivity extends AppCompatActivity {
                 }
 
             }
-            // Toast.makeText(this, ""+b, Toast.LENGTH_SHORT).show();
+
         }
 
 
         public String progressoDias(){
             Date data = new Date();
-            int dii = data.getDay();
-            int mes = data.getMonth();
-            int ano = data.getYear();
             SimpleDateFormat formatador = new SimpleDateFormat("yyyyMMdd");
            String dia = formatador.format(data);
 
@@ -132,65 +183,12 @@ public class HomeActivity extends AppCompatActivity {
                 public void onClick(DialogInterface arg0, int arg1) {
                 }
             });
-            //define um botão como negativo.
-//    builder.setNegativeButton("Negativo", new DialogInterface.OnClickListener() {
-//                public void onClick(DialogInterface arg0, int arg1) {
-//                }
-//            });
+
             //cria o AlertDialog
             alerta = builder.create();
             //Exibe
     alerta.show();
         }
-
-
-//        public void tesssss (){
-//            DecimalFormat df = new DecimalFormat("##");
-//
-//            float progresso =  usuario.getMeta() - usuario.getPesoAtual() ;
-//
-//            int xx = Integer.parseInt(df.format(usuario.getMeta()));
-//            int yy  = Integer.parseInt(df.format(usuario.getPesoAtual()));
-//
-//
-//
-//            progressBarMeta.setMax(xx);
-//            progressBarMeta.setProgress(yy);
-//            if(usuario.getPesoAtual() > usuario.getMeta()){
-//                 xx = Integer.parseInt(df.format(usuario.getMeta() - usuario.getPesoAtual()));
-//                 yy  = Integer.parseInt(df.format(usuario.getPesoAtual()));
-//
-//
-//                progressBarMeta.setMax(xx);
-//                progressBarMeta.setProgress(yy);
-//
-//            }
-//        }
-
-//    public void perdePEso(){
-//        if(usuario.getPesoAtual() > usuario.getMeta()){
-//            kgRestante =     usuario.getMeta() - usuario.getPesoAtual() ;
-//            Toast.makeText(this, "perder", Toast.LENGTH_SHORT).show();
-//            DecimalFormat df = new DecimalFormat("##");
-//            int xx = Integer.parseInt(df.format(usuario.getMeta()));
-//            int yy  = Integer.parseInt(df.format(usuario.getPesoAtual()));
-//            int meta = yy - xx;
-//            progressBarMeta.setMax(xx);
-//            progressBarMeta.setProgress(meta);
-//
-//        }
-//
-//    }
-//
-//    public void ganharPeso(){
-//    if(usuario.getPesoAtual() < usuario.getMeta()){
-//        kgRestante =  usuario.getPesoAtual()-usuario.getMeta() ;
-//        Toast.makeText(this, "pesso atual menor que meta", Toast.LENGTH_SHORT).show();
-//
-//    }
-//
-//    }
-
     public void inicializarComponentes(){
         //progressBarFundo = findViewById(R.id.progressBarFundo);
         campoMeta = findViewById(R.id.textViewMeta);
@@ -199,8 +197,8 @@ public class HomeActivity extends AppCompatActivity {
         camposDiasRestantes = findViewById(R.id.textDiasRestante);
         camposMudançaDePeso = findViewById(R.id.textudancaHome);
         kgPesoQueFalta = findViewById(R.id.textViewPesoqueFalta);
-//        progressBarDias = findViewById(R.id.progressBarDias);
-//        progressBarMeta = findViewById(R.id.progressBarMetaa);
+        progressobar = findViewById(R.id.progressBarKg);
+
 
     }
     public Float kgRestante(){
@@ -234,6 +232,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
+
     public  void carregar(){
 
 
@@ -255,15 +254,24 @@ public class HomeActivity extends AppCompatActivity {
             usuario.setSexo(user.getSexo());
             usuario.setMudanca(user.getMudanca());
             usuario.setPesoAtual(user.getPesoAtual());
+            usuario.setPesoRestante(user.getPesoRestante());
+            usuario.setPesoinicialmeta(user.getPesoinicialmeta());
 
 
         }
+
+
+
+
+
+    }
+    public void carregarDiasRestantes(){
         if(diasRestantes != 0){
-           if(diasRestantes >= 2){
-               camposDiasRestantes.setText(""+diasRestantes+" dias");
-           }else{
-               camposDiasRestantes.setText(""+diasRestantes+" dia");
-           }
+            if(diasRestantes >= 2){
+                camposDiasRestantes.setText(""+diasRestantes+" dias");
+            }else{
+                camposDiasRestantes.setText(""+diasRestantes+" dia");
+            }
         }
 
         String teste = camposDiasRestantes.getText().toString();
@@ -271,27 +279,15 @@ public class HomeActivity extends AppCompatActivity {
 
         String xy[] = x[0].split(" dia");
 
-        int progresso =0;
-        String result="";
-        for(String v: xy){
-        result=v;
-        }
-
-//        progresso = Integer.parseInt(result);
-//        progressBarDias.setProgress(progresso);
 
         campoPesoAtual.setText(String.valueOf(usuario.getPesoAtual()));
 
         if(usuario.getMeta() != 0.0){
-        campoMeta.setText(""+usuario.getMeta()+" Kg");
+            campoMeta.setText(""+usuario.getMeta()+" Kg");
         }
         if(usuario.getPesoInicial() != 0.0){
             campoPesoInicial.setText(""+usuario.getPesoInicial()+" Kg");
         }
-
-
-
-
 
 
     }
@@ -312,11 +308,15 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(new Intent(HomeActivity.this,HistoricoActivity.class));
 
     }
+    public void compartilhar(View view){
+        startActivity(new Intent(HomeActivity.this, SobreActivity.class));
+
+    }
     public void dialo(){
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
                 builder.setCancelable(false);
-                View view = LayoutInflater.from(HomeActivity.this).inflate(R.layout.custom_layout, null);
+                View view = LayoutInflater.from(HomeActivity.this).inflate(R.layout.parabens, null);
 
                 TextView title = (TextView) view.findViewById(R.id.title);
                 ImageButton imageButton = (ImageButton) view.findViewById(R.id.image);
@@ -355,14 +355,62 @@ diasRestantes();
 progressoDias();
 mudanca();
 atriobuicao();
+carregarDiasRestantes();
+verficarSeAMetaFoiBatida();
+        recuperarPreferences();
+
+    }
+    public void verficarSeAMetaFoiBatida(){
+
+       if(alertaMetaBatida){
+           if (usuario.getPesoinicialmeta() > usuario.getMeta() && usuario.getPesoAtual() <= usuario.getMeta()){
+               alertaDemetaBatida();
+           }else if (usuario.getPesoinicialmeta() < usuario.getMeta() && usuario.getPesoAtual() >= usuario.getMeta()){
+               alertaDemetaBatida();
+
+           }
+       }
+
+    }
+    public void alertaDemetaBatida(){
+        dialox.setContentView(R.layout.parabens);
+        dialox.getWindow().setBackgroundDrawable( new ColorDrawable(Color.TRANSPARENT));
+        adicionarNovaMeta = dialox.findViewById(R.id.buttonNovameta);
+        closeMeta = dialox.findViewById(R.id.imageButtonCloseMeta);
+        adicionarNovaMeta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this,MetaActivity.class));
+                preferencias.salvarAlertaMeta(false);
+                recuperarPreferences();
+                dialox.dismiss();
+            }
+        });
+        closeMeta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                preferencias.salvarAlertaMeta(false);
+                recuperarPreferences();
+                dialox.dismiss();
+            }
+        });
+
+
+
+        dialox.show();
+
+
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        diasRestantes();
+        carregarDiasRestantes();
     }
 
     public void atriobuicao(){
+
         if(kgRestante() >0){
 
             kgPesoQueFalta.setText(kgRestante() +" Kg");
@@ -372,6 +420,10 @@ atriobuicao();
 
             kgPesoQueFalta.setText(kgRestante() +" Kg");
         }
+        if(usuario.getPesoAtual() > usuario.getMeta()){
+            kgPesoQueFalta.setText("+"+kgRestante() +" Kg");
+        }
+
     }
 
     public void mudanca(){
@@ -384,7 +436,7 @@ atriobuicao();
         }
         if(item.getMudanca() != null){
 
-        camposMudançaDePeso.setText(""+item.getMudanca());
+        camposMudançaDePeso.setText(""+item.getMudanca()+" Kg");
 
             if(item.getMudanca().contains("+")){
                 camposMudançaDePeso.setTextColor(Color.rgb(34,139,34));

@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.PerfilActivity"></activity>
+        <activity android:name=".activity.SobreActivity"></activity>
+        <activity android:name=".activity.PerfilActivity" />
         <activity android:name=".activity.HistoricoActivity" />
         <activity android:name=".activity.EstartisticaActivity" />
         <activity

@@ -10,6 +10,7 @@ public class Preferencias {
     final String CHAVE_MES="mes";
     final String CHAVE_ANO="ano";
     final String CHAVE_META="meta";
+    final String CHAVE_ALERT_META="alertameta";
     final String CHAVE_PROGRESSO="progresso";
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -27,6 +28,12 @@ public class Preferencias {
         editor.commit();
 
     }
+    public void salvarAlertaMeta(Boolean alerta){
+        editor.putBoolean(CHAVE_ALERT_META,alerta);
+
+        editor.commit();
+
+    }
     public void salvarMeta(float meta){
         editor.putFloat(CHAVE_META,meta);
         editor.commit();
@@ -34,6 +41,9 @@ public class Preferencias {
     public void salvarProgresso(float progresso){
         editor.putFloat(CHAVE_PROGRESSO,progresso);
         editor.commit();
+    }
+    public Boolean recuperarALERTAMeta(){
+        return preferences.getBoolean(CHAVE_ALERT_META,false);
     }
     public float recuperarMeta(){
         return preferences.getFloat(CHAVE_META,0);

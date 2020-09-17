@@ -20,9 +20,28 @@ public class Usuario {
     private String nome;
     private  int nascimento;
     private String data;
+    private float pesoRestante;
+    private float pesoinicialmeta;
+    private Boolean alertameta;
 
 
     public Usuario() {
+    }
+
+    public float getPesoinicialmeta() {
+        return pesoinicialmeta;
+    }
+
+    public void setPesoinicialmeta(float pesoinicialmeta) {
+        this.pesoinicialmeta = pesoinicialmeta;
+    }
+
+    public Boolean getAlertameta() {
+        return alertameta;
+    }
+
+    public void setAlertameta(Boolean alertameta) {
+        this.alertameta = alertameta;
     }
 
     public Long getId() {
@@ -95,6 +114,14 @@ public class Usuario {
 
     public void setMeta(float meta) {
         this.meta = meta;
+    }
+
+    public float getPesoRestante() {
+        return pesoRestante;
+    }
+
+    public void setPesoRestante(float pesoRestante) {
+        this.pesoRestante = pesoRestante;
     }
 
     public double getGorduraKG() {
